@@ -1,19 +1,40 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import * as userServices from "./../services/users";
+import { IPagination } from "../interfaces/pagination";
 
-export const getAllUsers = async (_req: Request, res: Response) => {
-  const data = await userServices.getAllUsers();
-  res.json({ data });
+export const getAllUsers = async (
+  req: Request<{}, {}, {}, IPagination>,
+  res: Response
+) => {
+  const { query } = req;
+  const { data, meta } = await userServices.getAllUsers(query);
+  res.json({ data, meta });
 };
 
-export const createUser = async (req: Request, res: Response) => {
+export const getUserById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const data = await userServices.getUserById(id);
+    res.json({ data });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const data = await userServices.createUser(req.body);
     res.json({ data });
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      res.json({ error: e.message });
-    }
+    next(e);
   }
 };

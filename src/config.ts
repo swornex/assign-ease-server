@@ -11,6 +11,10 @@ const config = {
   bcrypt: {
     saltRounds: +(process.env.SALT_ROUNDS || 10)
   },
+  jwt: {
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || "accesstoken",
+    accessTokenExpiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || "1d"
+  },
   database: {
     charset: "utf8",
     client: process.env.DB_CLIENT || "pg",
