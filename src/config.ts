@@ -8,7 +8,9 @@ const config = {
   app: {
     port: process.env.PORT || 3000
   },
-
+  bcrypt: {
+    saltRounds: +(process.env.SALT_ROUNDS || 10)
+  },
   database: {
     charset: "utf8",
     client: process.env.DB_CLIENT || "pg",

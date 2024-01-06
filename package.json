@@ -1,5 +1,5 @@
 {
-  "name": "be-lf-intern-assignment-system",
+  "name": "assign-ease-server",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "migrate": "yarn knex migrate:latest --verbose",
     "rollback": "yarn knex migrate:rollback --verbose",
     "seed": "yarn knex seed:run --verbose",
-    "make:seeder": "yarn knex seed:make -x ts --env development"
+    "make:seed": "yarn knex seed:make -x ts --env development --timestamp-filename-prefix"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
