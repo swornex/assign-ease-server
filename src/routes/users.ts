@@ -23,5 +23,11 @@ router.post(
   validateReqBody(userCreateSchema),
   userControllers.createUser
 );
+router.delete(
+  "/:id",
+  accessAuth,
+  roleAuth(ROLES.ADMIN),
+  userControllers.deleteUser
+);
 
 export default router;

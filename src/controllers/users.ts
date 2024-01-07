@@ -38,3 +38,17 @@ export const createUser = async (
     next(e);
   }
 };
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const data = await userServices.deleteUser(id);
+    res.json({ message: data });
+  } catch (e) {
+    next(e);
+  }
+};

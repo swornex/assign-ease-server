@@ -38,3 +38,14 @@ export const createUser = async (user: ICreateUser) => {
   });
   return data;
 };
+
+export const deleteUser = async (id: string) => {
+  const user = await getUserById(id);
+
+  if (!user) {
+    throw new NotFoundError(`Id ${id} not found`);
+  }
+
+  await UserModel.deleteUser(id);
+  return `User ${id} deleted`;
+};

@@ -1,9 +1,7 @@
 import db from "../db";
-import { TABLES } from "../constants/collection";
+import { TABLES, USER_STATUS } from "../constants/collection";
 import BaseModel from "./baseModel";
 import { ICreateUser } from "../interfaces/users";
-import { IPagination } from "../interfaces/pagination";
-
 class UserModel extends BaseModel {
   static getAllUsers = (params: { offset: number; limit: number }) => {
     const query = this.queryBuilder()
@@ -45,7 +43,7 @@ class UserModel extends BaseModel {
         "updated_by"
       )
       .from(TABLES.USERS)
-      .where({ id })
+      .where({ id, status: USER_STATUS.ACTIVE })
       .first();
   };
 
@@ -53,12 +51,19 @@ class UserModel extends BaseModel {
     return this.queryBuilder()
       .select("*")
       .from(TABLES.USERS)
-      .where({ email })
+      .where({ email, status: USER_STATUS.ACTIVE })
       .first();
   };
 
   static createUser = (user: ICreateUser) => {
     return this.queryBuilder().insert(user).into(TABLES.USERS);
+  };
+
+  static deleteUser = (id: string) => {
+    return this.queryBuilder()
+      .update({ status: USER_STATUS.DELETED, updatedAt: new Date() })
+      .where({ id })
+      .from(TABLES.USERS);
   };
 }
 
