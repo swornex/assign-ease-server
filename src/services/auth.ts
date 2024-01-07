@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 import NotFoundError from "../errors/notFoundError";
 import UserModel from "../models/user";
-import config from "../config";
+import { generateAccessToken } from "../utils/jwt";
+import { serialize } from "../utils/user";
 
 export const login = async (email: string, password: string) => {
   const user = await UserModel.getByEmail(email);
@@ -18,9 +18,7 @@ export const login = async (email: string, password: string) => {
     throw new NotFoundError("Incorrect password");
   }
 
-  const accessToken = jwt.sign(user, config.jwt.accessTokenSecret, {
-    expiresIn: config.jwt.accessTokenExpiresIn
-  });
+  const accessToken = generateAccessToken(serialize(user));
 
   return { accessToken };
 };

@@ -1,7 +1,7 @@
 import db from "../db";
-import { TABLES } from "../constants/table";
+import { TABLES } from "../constants/collection";
 import BaseModel from "./baseModel";
-import { IUser } from "../interfaces/users";
+import { ICreateUser } from "../interfaces/users";
 import { IPagination } from "../interfaces/pagination";
 
 class UserModel extends BaseModel {
@@ -57,7 +57,7 @@ class UserModel extends BaseModel {
       .first();
   };
 
-  static createUser = (user: IUser) => {
+  static createUser = (user: ICreateUser) => {
     return this.queryBuilder().insert(user).into(TABLES.USERS);
   };
 }
