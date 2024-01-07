@@ -1,6 +1,6 @@
 import NotFoundError from "../errors/notFoundError";
 import { IPagination } from "../interfaces/pagination";
-import { IUser } from "../interfaces/users";
+import { ICreateUser } from "../interfaces/users";
 import UserModel from "../models/user";
 import { hashPassword } from "../utils/bcrypt";
 import { buildMeta, getPaginationOptions } from "../utils/pagination";
@@ -29,7 +29,7 @@ export const getUserById = async (id: string) => {
   return data;
 };
 
-export const createUser = async (user: IUser) => {
+export const createUser = async (user: ICreateUser) => {
   const hashedPassword = hashPassword(user.password);
 
   const data = await UserModel.createUser({
