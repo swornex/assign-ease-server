@@ -1,7 +1,7 @@
 import NotFoundError from "../errors/notFoundError";
 import { IPagination } from "../interfaces/pagination";
 import { ICreateUser } from "../interfaces/users";
-import UserModel from "../models/user";
+import UserModel from "../models/users";
 import { hashPassword } from "../utils/bcrypt";
 import { buildMeta, getPaginationOptions } from "../utils/pagination";
 

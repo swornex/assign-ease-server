@@ -1,5 +1,6 @@
 export const TABLES = {
-  USERS: "users"
+  USERS: "users",
+  ASSIGNMENTS: "assignments"
 } as const;
 
 export const ROLES = {
