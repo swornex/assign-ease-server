@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as assignmentServices from "../services/assignments";
 import UnauthenticatedError from "../errors/unauthenticatedError";
+import { IPagination } from "../interfaces/pagination";
 
 export const addAssignment = async (
   req: Request,
@@ -22,14 +23,18 @@ export const addAssignment = async (
   }
 };
 
-export const getAssignments = async (_req: Request, res: Response) => {
-  const data = await assignmentServices.getAssignments();
-  res.json({ data });
+export const getAssignments = async (
+  req: Request<{}, {}, {}, IPagination>,
+  res: Response
+) => {
+  const { query } = req;
+  const { data, meta } = await assignmentServices.getAssignments(query);
+  res.json({ data, meta });
 };
 
 export const getAssignmentById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const data = await assignmentServices.getAssignmentById(id);
+  const data = await assignmentServices.getAssignmentById(+id);
   res.json({ data });
 };
 
@@ -46,7 +51,7 @@ export const updateAssignment = async (
     }
 
     const updatedBy = req.user.id;
-    const data = await assignmentServices.updateAssignment(params.id, {
+    const data = await assignmentServices.updateAssignment(+params.id, {
       ...body,
       updatedBy
     });

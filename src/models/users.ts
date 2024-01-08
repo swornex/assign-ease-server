@@ -7,7 +7,7 @@ class UserModel extends BaseModel {
     const query = this.queryBuilder()
       .select(
         "id",
-        db.raw("CONCAT(first_name,'', last_name) AS name"),
+        db.raw("CONCAT(first_name,' ', last_name) AS name"),
         "email",
         "role",
         "status",
@@ -29,11 +29,11 @@ class UserModel extends BaseModel {
       .first();
   };
 
-  static getUserById = (id: string) => {
+  static getUserById = (id: number) => {
     return this.queryBuilder()
       .select(
         "id",
-        db.raw("CONCAT(first_name,'', last_name) AS name"),
+        db.raw("CONCAT(first_name,' ', last_name) AS name"),
         "email",
         "role",
         "status",
@@ -56,10 +56,10 @@ class UserModel extends BaseModel {
   };
 
   static createUser = (user: ICreateUser) => {
-    return this.queryBuilder().insert(user).into(TABLES.USERS);
+    return this.queryBuilder().insert(user).into(TABLES.USERS).returning("*");
   };
 
-  static deleteUser = (id: string) => {
+  static deleteUser = (id: number) => {
     return this.queryBuilder()
       .update({ status: USER_STATUS.DELETED, updatedAt: new Date() })
       .where({ id })

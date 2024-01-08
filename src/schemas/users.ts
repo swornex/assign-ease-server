@@ -11,7 +11,7 @@ export const userCreateSchema = joi.object({
   password: joi.string().trim().required(),
   firstName: joi.string().trim().required(),
   lastName: joi.string().trim().required(),
-  role: joi.valid("Admin" || "User").default("User")
+  role: joi.valid("Admin", "User").default("User")
 });
 
 export const userGetSchema = joi.object({

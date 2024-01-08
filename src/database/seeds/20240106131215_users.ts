@@ -17,7 +17,7 @@ export function seed(knex: Knex): Promise<void> {
         {
           first_name: "Admin",
           email: "admin@email.com",
-          password: hashPassword("password"),
+          password: hashPassword("admin123"),
           role: "Admin"
         }
       ]);

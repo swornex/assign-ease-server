@@ -10,4 +10,5 @@ export interface IUpdateAssignments {
   description?: string;
   deadline?: Date;
   updatedBy: number;
+  updatedAt: Date;
 }

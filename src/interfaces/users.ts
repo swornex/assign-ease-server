@@ -7,6 +7,7 @@ export interface ICreateUser {
   email: string;
   password: string;
   role: IRole;
+  createdBy: string;
 }
 
 export interface IGetUser extends ICreateUser {
