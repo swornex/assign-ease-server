@@ -4,6 +4,7 @@ import { ICreateUser } from "../interfaces/users";
 import UserModel from "../models/users";
 import { hashPassword } from "../utils/bcrypt";
 import { buildMeta, getPaginationOptions } from "../utils/pagination";
+import { serialize } from "../utils/user";
 
 export const getAllUsers = async (filter: IPagination) => {
   const { page, size } = filter;
@@ -21,7 +22,7 @@ export const getAllUsers = async (filter: IPagination) => {
   return { data: users, meta };
 };
 
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: number) => {
   const data = await UserModel.getUserById(id);
   if (!data) {
     throw new NotFoundError(`Id ${id} not found`);
@@ -32,14 +33,14 @@ export const getUserById = async (id: string) => {
 export const createUser = async (user: ICreateUser) => {
   const hashedPassword = hashPassword(user.password);
 
-  const data = await UserModel.createUser({
+  const [data] = await UserModel.createUser({
     ...user,
     password: hashedPassword
   });
-  return data;
+  return serialize(data);
 };
 
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (id: number) => {
   const user = await getUserById(id);
 
   if (!user) {
