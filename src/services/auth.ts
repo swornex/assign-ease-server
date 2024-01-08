@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 import NotFoundError from "../errors/notFoundError";
-import UserModel from "../models/user";
+import UserModel from "../models/users";
 import { generateAccessToken } from "../utils/jwt";
 import { serialize } from "../utils/user";
 
