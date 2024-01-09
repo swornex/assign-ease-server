@@ -17,6 +17,7 @@ export async function up(knex: Knex): Promise<void> {
       a.title,
       e.evaluated_by,
       s.id AS submission_id,
+      ROUND((e.problem_solving_points + e.final_product_points + e.code_quality_points) / 3) AS avg_points,
       CASE
         WHEN s.id IS NOT NULL AND e.id IS NOT NULL THEN 'Evaluated'
         WHEN s.id IS NOT NULL THEN 'Submitted'
@@ -38,6 +39,7 @@ export async function up(knex: Knex): Promise<void> {
     assignment_id,
     title,
     status,
+    avg_points,
     evaluated_by,
     submission_id,
     is_late_submitted

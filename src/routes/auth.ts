@@ -6,6 +6,6 @@ import { userLoginSchema } from "../schemas/users";
 
 const router = Router();
 
-router.use("/login", validateReqBody(userLoginSchema), authControllers.login);
+router.use("/login", [validateReqBody(userLoginSchema)], authControllers.login);
 
 export default router;

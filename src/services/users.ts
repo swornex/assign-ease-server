@@ -24,9 +24,11 @@ export const getAllUsers = async (filter: IPagination) => {
 
 export const getUserById = async (id: number) => {
   const data = await UserModel.getUserById(id);
+
   if (!data) {
     throw new NotFoundError(`Id ${id} not found`);
   }
+
   return data;
 };
 
@@ -37,6 +39,7 @@ export const createUser = async (user: ICreateUser) => {
     ...user,
     password: hashedPassword
   });
+
   return serialize(data);
 };
 
@@ -48,5 +51,6 @@ export const deleteUser = async (id: number) => {
   }
 
   await UserModel.deleteUser(id);
+
   return `User ${id} deleted`;
 };

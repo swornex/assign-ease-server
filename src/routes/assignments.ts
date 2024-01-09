@@ -12,22 +12,21 @@ const router = Router();
 
 router.post(
   "/",
-  accessAuth,
-  roleAuth(ROLES.ADMIN),
-  validateReqBody(addAssignmentSchema),
+  [accessAuth, roleAuth(ROLES.ADMIN), validateReqBody(addAssignmentSchema)],
   assignmentControllers.addAssignment
 );
+
 router.get(
   "/",
-  accessAuth,
-  validateReqQuery(getAssignmentSchema),
+  [accessAuth, validateReqQuery(getAssignmentSchema)],
   assignmentControllers.getAssignments
 );
-router.get("/:id", accessAuth, assignmentControllers.getAssignmentById);
+
+router.get("/:id", [accessAuth], assignmentControllers.getAssignmentById);
+
 router.patch(
   "/:id",
-  accessAuth,
-  roleAuth(ROLES.ADMIN),
+  [accessAuth, roleAuth(ROLES.ADMIN)],
   assignmentControllers.updateAssignment
 );
 

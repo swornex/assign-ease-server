@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import * as userServices from "./../services/users";
 import { IPagination } from "../interfaces/pagination";
+import UnauthenticatedError from "../errors/unauthenticatedError";
 
 export const getAllUsers = async (
   req: Request<{}, {}, {}, IPagination>,
@@ -33,7 +34,7 @@ export const createUser = async (
 ) => {
   try {
     if (!req.user) {
-      throw new Error("Unauthenticated");
+      throw new UnauthenticatedError("Unauthenticated");
     }
 
     const createdBy = req.user.id;

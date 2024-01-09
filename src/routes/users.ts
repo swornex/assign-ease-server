@@ -10,23 +10,21 @@ const router = Router();
 
 router.get(
   "/",
-  accessAuth,
-  roleAuth(ROLES.ADMIN),
-  validateReqQuery(userGetSchema),
+  [accessAuth, roleAuth(ROLES.ADMIN), validateReqQuery(userGetSchema)],
   userControllers.getAllUsers
 );
-router.get("/:id", accessAuth, userControllers.getUserById);
+
+router.get("/:id", [accessAuth], userControllers.getUserById);
+
 router.post(
   "/",
-  accessAuth,
-  roleAuth(ROLES.ADMIN),
-  validateReqBody(userCreateSchema),
+  [accessAuth, roleAuth(ROLES.ADMIN), validateReqBody(userCreateSchema)],
   userControllers.createUser
 );
+
 router.delete(
   "/:id",
-  accessAuth,
-  roleAuth(ROLES.ADMIN),
+  [accessAuth, roleAuth(ROLES.ADMIN)],
   userControllers.deleteUser
 );
 
