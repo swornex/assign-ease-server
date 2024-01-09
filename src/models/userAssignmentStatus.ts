@@ -7,34 +7,12 @@ class UserAssignmentStatus extends BaseModel {
   }
 
   private static mapToModel(array: any[]) {
-    // return array.map((row) => {
-    //   return {
-    //     assignmentId: row.assignmentId,
-    //     title: row.title,
-    //     submissions: [
-    //       {
-    //         userId: row.userId,
-    //         name: row.name,
-    //         submissionId: row.submissionId,
-    //         isLateSubmitted: row.isLateSubmitted,
-    //         status: row.status,
-    //         evaluation: row.avgPoints
-    //           ? {
-    //               evaluatedBy: row.evaluatedBy,
-    //               avgPoints: row.avgPoints
-    //             }
-    //           : null
-    //       }
-    //     ]
-    //   };
-    // });
-
     // Group by assignmentId
     const groupedByAssignment = _.groupBy(array, "assignmentId");
 
     // Map the grouped data to the desired format
     const result = _.map(groupedByAssignment, (assignments, assignmentId) => ({
-      assignmentId,
+      assignmentId: +assignmentId,
       title: assignments[0].title,
       submissions: _.map(assignments, (assignment) => ({
         userId: assignment.userId,
@@ -51,17 +29,41 @@ class UserAssignmentStatus extends BaseModel {
     return orderedResult;
   }
 
-  static async getAllAssignmentData() {
-    const query = await this.getBaseQuery().orderBy("assignment_id", "desc");
-    // return query;
+  static async getAllAssignmentData(params: { offset: number; limit: number }) {
+    const query = await this.getBaseQuery()
+      .orderBy("assignment_id", "desc")
+      .offset(params.offset)
+      .limit(params.limit);
+
     return this.mapToModel(query);
   }
 
-  static getDataByUserId(userId: number) {
-    return this.getBaseQuery()
+  static getDataByUserId(
+    userId: number,
+    params: { offset: number; limit: number }
+  ) {
+    const query = this.getBaseQuery()
       .clearSelect()
-      .select("title", "avg_points", "status")
+      .select("title", "avg_points", "status", "assignment_id")
       .where({ userId });
+
+    query.offset(params.offset).limit(params.limit);
+
+    return query;
+  }
+
+  static countAll(userId?: number) {
+    if (userId) {
+      return this.queryBuilder()
+        .from("user_assignment_status")
+        .where({ userId })
+        .count("*")
+        .first();
+    }
+    return this.queryBuilder()
+      .from("user_assignment_status")
+      .count("*")
+      .first();
   }
 }
 

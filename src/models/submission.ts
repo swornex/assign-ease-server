@@ -8,6 +8,17 @@ class SubmissionModel extends BaseModel {
       .into("submissions")
       .returning("*");
   };
+
+  static getUserAssignmentSubmission = (
+    submittedBy: number,
+    assignmentId: number
+  ) => {
+    return this.queryBuilder()
+      .select("*")
+      .from("submissions")
+      .where({ submittedBy, assignmentId })
+      .first();
+  };
 }
 
 export default SubmissionModel;

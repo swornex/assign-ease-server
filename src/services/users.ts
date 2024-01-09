@@ -10,7 +10,7 @@ export const getAllUsers = async (filter: IPagination) => {
   const { page, size } = filter;
 
   const pageDetails = getPaginationOptions({ page, size });
-  const userPromise = UserModel.getAllUsers({ ...pageDetails });
+  const userPromise = UserModel.getAllUsers(pageDetails);
   const countPromise = UserModel.countAll();
 
   const [users, count] = await Promise.all([userPromise, countPromise]);

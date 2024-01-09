@@ -2,9 +2,10 @@ import { NextFunction, Request, Response } from "express";
 
 import * as dashboardServices from "../services/dashboard";
 import UnauthenticatedError from "../errors/unauthenticatedError";
+import { IPagination } from "../interfaces/pagination";
 
 export const dashboard = async (
-  req: Request,
+  req: Request<{}, {}, {}, IPagination>,
   res: Response,
   next: NextFunction
 ) => {
@@ -15,8 +16,13 @@ export const dashboard = async (
 
     const role = req.user.role;
     const userId = req.user.id;
-    const data = await dashboardServices.dashboard(role, +userId);
-    res.json({ data });
+    const { query } = req;
+    const { data, meta } = await dashboardServices.dashboard(
+      role,
+      +userId,
+      query
+    );
+    res.json({ data, meta });
   } catch (e) {
     next(e);
   }
