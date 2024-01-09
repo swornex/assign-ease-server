@@ -13,7 +13,7 @@ export const getAssignments = async (filter: IPagination) => {
   const { page, size } = filter;
 
   const pageDetails = getPaginationOptions({ page, size });
-  const assignmentPromises = AssignmentModel.getAssignments({ ...pageDetails });
+  const assignmentPromises = AssignmentModel.getAssignments(pageDetails);
   const countPromise = AssignmentModel.countAll();
 
   const [assignments, count] = await Promise.all([
