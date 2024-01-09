@@ -12,15 +12,13 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable(TABLE_NAME, (table) => {
     table.bigIncrements();
 
-    table.integer("problem_solving_marks").notNullable();
+    table.integer("problem_solving_points").notNullable();
 
-    table.integer("final_product_marks").notNullable();
+    table.integer("final_product_points").notNullable();
 
-    table.integer("code_quality_marks").notNullable();
+    table.integer("code_quality_points").notNullable();
 
     table.text("remarks").notNullable();
-
-    table.integer("average_marks").notNullable();
 
     table
       .bigInteger("submission_id")

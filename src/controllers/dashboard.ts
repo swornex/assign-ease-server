@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import * as submissionServices from "../services/submissions";
+
+import * as dashboardServices from "../services/dashboard";
 import UnauthenticatedError from "../errors/unauthenticatedError";
 
-export const submitAssignment = async (
+export const dashboard = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -12,15 +13,9 @@ export const submitAssignment = async (
       throw new UnauthenticatedError("Unauthenticated");
     }
 
-    const submittedBy = req.user.id;
-
-    const { body, params } = req;
-
-    const data = await submissionServices.submitAssignment({
-      ...body,
-      assignmentId: params.assignmentId,
-      submittedBy
-    });
+    const role = req.user.role;
+    const userId = req.user.id;
+    const data = await dashboardServices.dashboard(role, +userId);
     res.json({ data });
   } catch (e) {
     next(e);
