@@ -1,6 +1,7 @@
 import express from "express";
 import config from "./config";
 import router from "./routes";
+import cors from "cors";
 import { logger } from "./middlewares/logger";
 import { genericErrorHandler, notFoundError } from "./middlewares/errorHandler";
 
@@ -9,6 +10,8 @@ const app = express();
 app.use(express.json());
 
 app.use(logger);
+
+app.use(cors());
 
 app.use("/api", router);
 
