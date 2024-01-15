@@ -3,6 +3,14 @@ import { IRole } from "../interfaces/users";
 import UserAssignmentStatus from "../models/userAssignmentStatus";
 import { buildMeta, getPaginationOptions } from "../utils/pagination";
 
+/**
+ * Generates the dashboard data based on the user's role, user ID, and pagination filter.
+ *
+ * @param {IRole} role - The role of the user.
+ * @param {number} userId - The ID of the user.
+ * @param {IPagination} filter - The pagination filter.
+ * @return {{data, meta}} The dashboard data and metadata.
+ */
 export const dashboard = async (
   role: IRole,
   userId: number,

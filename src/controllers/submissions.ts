@@ -2,6 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import * as submissionServices from "../services/submissions";
 import UnauthenticatedError from "../errors/unauthenticatedError";
 
+/**
+ * Submits an assignment.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} - a promise that resolves to void
+ */
 export const submitAssignment = async (
   req: Request,
   res: Response,
@@ -16,7 +24,6 @@ export const submitAssignment = async (
 
     const { body } = req;
 
-    console.log({ body });
     const data = await submissionServices.submitAssignment({
       ...body,
       submittedBy

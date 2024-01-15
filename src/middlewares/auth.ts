@@ -3,6 +3,14 @@ import UnauthenticatedError from "../errors/unauthenticatedError";
 import { validateAccessToken } from "../utils/jwt";
 import { IRole } from "../interfaces/users";
 
+/**
+ * Middleware function to handle access authentication.
+ *
+ * @param {Request} req - The request object.
+ * @param {Response} _res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @return {void}
+ */
 export const accessAuth = (
   req: Request,
   _res: Response,
@@ -27,6 +35,12 @@ export const accessAuth = (
   }
 };
 
+/**
+ * Middleware function that checks if the user has the specified role.
+ *
+ * @param {IRole} role - The role to check against.
+ * @return {Function} - The middleware function that performs the role check.
+ */
 export const roleAuth = (role: IRole) => {
   return (req: Request, _res: Response, next: NextFunction) => {
     try {

@@ -6,6 +6,12 @@ import { hashPassword } from "../utils/bcrypt";
 import { buildMeta, getPaginationOptions } from "../utils/pagination";
 import { serialize } from "../utils/user";
 
+/**
+ * Retrieves all users based on the provided filter options.
+ *
+ * @param {IGetUserQuery} filter - The filter options to apply to the user retrieval.
+ * @returns {Promise<{ data: User[], meta: Meta }>} - An object containing the retrieved user data and metadata.
+ */
 export const getAllUsers = async (filter: IGetUserQuery = {}) => {
   const { page, size } = filter;
 
@@ -22,6 +28,13 @@ export const getAllUsers = async (filter: IGetUserQuery = {}) => {
   return { data: users, meta };
 };
 
+/**
+ * Retrieves a user by their ID from the database.
+ *
+ * @param {number} id - The ID of the user to retrieve.
+ * @return {Promise<User>} The user object if found.
+ * @throws {NotFoundError} If the user with the given ID is not found.
+ */
 export const getUserById = async (id: number) => {
   const data = await UserModel.getUserById(id);
 
@@ -32,6 +45,12 @@ export const getUserById = async (id: number) => {
   return data;
 };
 
+/**
+ * Creates a new user.
+ *
+ * @param {ICreateUser} user - The user data.
+ * @return {Promise<Omit<IGetUser, "password">>} The serialized user data.
+ */
 export const createUser = async (user: ICreateUser) => {
   const hashedPassword = hashPassword(user.password);
 
@@ -43,6 +62,12 @@ export const createUser = async (user: ICreateUser) => {
   return serialize(data);
 };
 
+/**
+ * Deletes a user by their ID.
+ *
+ * @param {number} id - The ID of the user to be deleted.
+ * @return {Promise<string>} A message indicating the success of the deletion operation.
+ */
 export const deleteUser = async (id: number) => {
   const user = await getUserById(id);
 

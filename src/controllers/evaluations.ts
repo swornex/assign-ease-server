@@ -3,6 +3,14 @@ import { NextFunction, Request, Response } from "express";
 import * as evaluationServices from "../services/evaluations";
 import UnauthenticatedError from "../errors/unauthenticatedError";
 
+/**
+ * Evaluates an assignment.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} - a promise that resolves to void
+ */
 export const evaluateAssignment = async (
   req: Request,
   res: Response,

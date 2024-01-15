@@ -4,6 +4,14 @@ import * as dashboardServices from "../services/dashboard";
 import UnauthenticatedError from "../errors/unauthenticatedError";
 import { IPagination } from "../interfaces/pagination";
 
+/**
+ * Executes the dashboard function.
+ *
+ * @param {Request<{}, {}, {}, IPagination>} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next function.
+ * @return {Promise<void>} Returns a promise with no return value.
+ */
 export const dashboard = async (
   req: Request<{}, {}, {}, IPagination>,
   res: Response,
