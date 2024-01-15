@@ -9,5 +9,5 @@ export const addAssignmentSchema = joi.object({
 
 export const getAssignmentSchema = joi.object({
   page: joi.number().integer().min(1).default(DEFAULT_PAGE),
-  size: joi.number().integer().min(1).max(30).default(DEFAULT_PAGE_SIZE)
+  size: joi.number().integer().min(1).default(DEFAULT_PAGE_SIZE)
 });

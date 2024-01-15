@@ -14,10 +14,10 @@ export const evaluateAssignment = async (
     }
 
     const evaluatedBy = req.user.id;
-    const { body, params } = req;
+    const { body } = req;
     const data = await evaluationServices.evaluateAssignment({
       ...body,
-      submissionId: params.submissionId,
+
       evaluatedBy
     });
     res.json({ data });

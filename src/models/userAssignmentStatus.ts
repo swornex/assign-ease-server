@@ -1,3 +1,4 @@
+import { IUserAssignmentStatus } from "../interfaces/userAssignmentStatus";
 import BaseModel from "./baseModel";
 import _ from "lodash";
 
@@ -17,10 +18,12 @@ class UserAssignmentStatus extends BaseModel {
       submissions: _.map(assignments, (assignment) => ({
         userId: assignment.userId,
         name: assignment.name,
+        userStatus: assignment.userStatus,
         submissionId: assignment.submissionId,
         isLateSubmitted: assignment.isLateSubmitted,
-        status: assignment.status,
-        evaluation: assignment.evaluation
+        assignmentStatus: assignment.assignmentStatus,
+        evaluation: assignment.evaluation,
+        submissionUrl: assignment.submissionUrl
       }))
     }));
 
@@ -31,6 +34,7 @@ class UserAssignmentStatus extends BaseModel {
 
   static async getAllAssignmentData(params: { offset: number; limit: number }) {
     const query = await this.getBaseQuery()
+      .where("userStatus", "Active")
       .orderBy("assignment_id", "desc")
       .offset(params.offset)
       .limit(params.limit);
@@ -44,7 +48,7 @@ class UserAssignmentStatus extends BaseModel {
   ) {
     const query = this.getBaseQuery()
       .clearSelect()
-      .select("title", "avg_points", "status", "assignment_id")
+      .select("title", "avg_points", "assignment_status", "assignment_id")
       .where({ userId });
 
     query.offset(params.offset).limit(params.limit);
@@ -65,6 +69,16 @@ class UserAssignmentStatus extends BaseModel {
       .count("*")
       .first();
   }
+
+  static getDataByUserAssignmentId = ({
+    userId,
+    assignmentId
+  }: IUserAssignmentStatus) => {
+    return this.queryBuilder()
+      .select("*")
+      .from("user_assignment_status")
+      .where({ userId, assignmentId });
+  };
 }
 
 export default UserAssignmentStatus;

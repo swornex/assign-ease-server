@@ -3,6 +3,7 @@ import { ISubmission } from "../interfaces/submissions";
 import SubmissionModel from "../models/submission";
 
 export const submitAssignment = async (submission: ISubmission) => {
+  console.log(submission);
   const { submittedBy, assignmentId } = submission;
   const existingSubmission = await SubmissionModel.getUserAssignmentSubmission(
     submittedBy,

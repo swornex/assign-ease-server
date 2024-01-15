@@ -16,5 +16,6 @@ export const userCreateSchema = joi.object({
 
 export const userGetSchema = joi.object({
   page: joi.number().integer().min(1).default(DEFAULT_PAGE),
-  size: joi.number().integer().min(1).max(30).default(DEFAULT_PAGE_SIZE)
+  size: joi.number().integer().min(1).default(DEFAULT_PAGE_SIZE),
+  role: joi.valid("Admin", "User").optional()
 });

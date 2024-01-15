@@ -1,5 +1,6 @@
 import joi from "joi";
 
 export const submitAssignmentSchema = joi.object({
-  assignmentUrl: joi.string().required().trim()
+  submissionUrl: joi.string().required().trim(),
+  assignmentId: joi.number().required().min(1)
 });

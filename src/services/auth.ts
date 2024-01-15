@@ -12,7 +12,8 @@ export const login = async (email: string, password: string) => {
     throw new NotFoundError("User not found");
   }
 
-  const isPasswordMatch = bcrypt.compare(password, user.password);
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
+  console.log(isPasswordMatch);
 
   if (!isPasswordMatch) {
     throw new NotFoundError("Incorrect password");

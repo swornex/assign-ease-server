@@ -2,8 +2,9 @@ import db from "../db";
 import { TABLES, USER_STATUS } from "../constants/collection";
 import BaseModel from "./baseModel";
 import { ICreateUser } from "../interfaces/users";
+import { IPagination } from "../interfaces/pagination";
 class UserModel extends BaseModel {
-  static getAllUsers = (params: { offset: number; limit: number }) => {
+  static getAllUsers = (filter: IPagination) => {
     const query = this.queryBuilder()
       .select(
         "id",
@@ -18,7 +19,16 @@ class UserModel extends BaseModel {
       )
       .from(TABLES.USERS);
 
-    query.offset(params.offset).limit(params.limit);
+    if (filter.role) {
+      filter.role === "User"
+        ? query.where({ role: "User" })
+        : query.where({ role: "Admin" });
+    }
+
+    query
+      .orderBy("createdAt", "desc")
+      .offset(filter.offset)
+      .limit(filter.limit);
     return query;
   };
 

@@ -14,11 +14,11 @@ export const submitAssignment = async (
 
     const submittedBy = req.user.id;
 
-    const { body, params } = req;
+    const { body } = req;
 
+    console.log({ body });
     const data = await submissionServices.submitAssignment({
       ...body,
-      assignmentId: params.assignmentId,
       submittedBy
     });
     res.json({ data });

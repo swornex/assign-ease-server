@@ -9,7 +9,7 @@ import { submitAssignmentSchema } from "../schemas/submissions";
 const router = Router();
 
 router.post(
-  "/:assignmentId",
+  "/",
   [accessAuth, roleAuth(ROLES.USER), validateReqBody(submitAssignmentSchema)],
   submissionControllers.submitAssignment
 );

@@ -12,7 +12,7 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable(TABLE_NAME, (table) => {
     table.bigIncrements();
 
-    table.string("assignment_url").notNullable();
+    table.string("submission_url").notNullable();
 
     table
       .bigInteger("assignment_id")

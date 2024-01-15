@@ -1,16 +1,16 @@
 import NotFoundError from "../errors/notFoundError";
-import { IPagination } from "../interfaces/pagination";
+import { IGetUserQuery, IPagination } from "../interfaces/pagination";
 import { ICreateUser } from "../interfaces/users";
 import UserModel from "../models/users";
 import { hashPassword } from "../utils/bcrypt";
 import { buildMeta, getPaginationOptions } from "../utils/pagination";
 import { serialize } from "../utils/user";
 
-export const getAllUsers = async (filter: IPagination) => {
+export const getAllUsers = async (filter: IGetUserQuery = {}) => {
   const { page, size } = filter;
 
   const pageDetails = getPaginationOptions({ page, size });
-  const userPromise = UserModel.getAllUsers(pageDetails);
+  const userPromise = UserModel.getAllUsers({ ...pageDetails, ...filter });
   const countPromise = UserModel.countAll();
 
   const [users, count] = await Promise.all([userPromise, countPromise]);

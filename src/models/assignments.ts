@@ -13,7 +13,10 @@ class AssignmentModel extends BaseModel {
   static getAssignments = (params: { offset: number; limit: number }) => {
     const query = this.queryBuilder().select("*").from(TABLES.ASSIGNMENTS);
 
-    query.offset(params.offset).limit(params.limit);
+    query
+      .orderBy("createdAt", "desc")
+      .offset(params.offset)
+      .limit(params.limit);
 
     return query;
   };

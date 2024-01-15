@@ -8,7 +8,7 @@ import { evaluationAssignmentSchema } from "../schemas/evaluations";
 const router = Router();
 
 router.post(
-  "/:submissionId",
+  "/",
   [
     accessAuth,
     roleAuth(ROLES.ADMIN),

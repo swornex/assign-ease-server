@@ -1,5 +1,5 @@
 export interface ISubmission {
-  assignmentUrl: string;
+  submissionUrl: string;
   assignmentId: number;
   submittedBy: number;
 }
